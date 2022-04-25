@@ -1,0 +1,51 @@
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database.sqlite3'
+  });
+
+const Game = sequelize.define('Game', {
+    // Model attributes are defined here
+    id: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    primaryKey: true
+    },
+    name: {
+    type: DataTypes.STRING,
+    allowNull: false
+    },
+    igdbID: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+    }
+},{
+    timestamps: false
+});
+
+async function findAllGames(){
+  const games = await Game.findAll();
+  console.log(games.every(game => game instanceof Game)); // true
+  return JSON.stringify(games,null,2);
+}
+
+async function findGameByPrimaryKey(key){
+  const game = await Game.findByPk(key);
+  if (game === null) {
+    console.log('Not found!');
+  } else {
+    console.log(game instanceof Game);
+    return game.toJSON();
+  }
+}
+
+async function connectToDB() {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+module.exports = {findAllGames, findGameByPrimaryKey, connectToDB};
