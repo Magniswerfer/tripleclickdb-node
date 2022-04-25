@@ -1,1 +1,1 @@
-# tripleclickdb-node
+# TripleclickDB - the Node.js version
