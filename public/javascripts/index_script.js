@@ -4,16 +4,16 @@ let games;
 
 axios.get('/getAllGames').then(resp => {
     games = resp.data;
-    games.forEach(game => {
-        let newRow = document.createElement("tr")
+    games.forEach(game => { // run through all games
+        let newRow = document.createElement("tr") // create element for all games
 
         // Create first cell in each row, and make it a link to the game page.
-        let col1 = document.createElement('td');
+        let col1 = document.createElement('td'); 
         let gameLinkElement = document.createElement('a');
-        let linkText = document.createTextNode(game.name);
+        let linkText = document.createTextNode(game.name); // put the name of  the game as link
         gameLinkElement.appendChild(linkText); 
         gameLinkElement.title = game.name;
-        gameLinkElement.href = "/games/"+game.id;
+        gameLinkElement.href = "/games/"+game.id; // make it reference our API
         col1.appendChild(gameLinkElement);
         
         let col2 = document.createElement('td');
@@ -22,7 +22,7 @@ axios.get('/getAllGames').then(resp => {
         let epName;
         let epDate;
         //Most recent mentions
-        axios.get('/getMostRecentMentionsOf/'+game.id).then(resp =>{
+        axios.get('/getMostRecentMentionsOf/'+game.id).then(resp =>{ // get the most recent mention of the game
             epName = resp.data.name;
             epDate = resp.data.date;
 
@@ -30,7 +30,7 @@ axios.get('/getAllGames').then(resp => {
             let epMonth = epDate.toString().slice(5, 6);
             let epDay = epDate.toString().slice(7, 8);
 
-            epDate = epYear + "-" + epMonth + "-" + epDay;
+            epDate = epYear + "-" + epMonth + "-" + epDay; // format the date (this is ugly, but works lols)
 
             let date = new Date (epDate)
             
@@ -40,7 +40,7 @@ axios.get('/getAllGames').then(resp => {
         });
         
         let col4 = document.createElement('td');
-        axios.get('/getMentionsOf/'+game.id).then(resp =>{
+        axios.get('/getMentionsOf/'+game.id).then(resp =>{ // get the number of times the game was mentioned
             mentions = resp.data.length
             col4.innerHTML = mentions;
         });
