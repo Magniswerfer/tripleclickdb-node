@@ -152,7 +152,13 @@ async function findMostRecentMentions(){
     ['episode', 'DESC'],
     ['game', 'ASC'],
   ]});
-  sortedMentions = Object.values(sortedMentions).slice(0,5);
+  let uniqueGame = [];
+  Object.values(sortedMentions).forEach(mention => {
+      if(!uniqueGame.includes(mention.dataValues.game)){
+        uniqueGame.push(mention)
+      }
+  });
+  sortedMentions = uniqueGame.slice(0,5);
   return sortedMentions;
 }
 

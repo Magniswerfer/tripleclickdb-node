@@ -4,7 +4,12 @@ block content
   h1.game-title #{gameInfo.name}
   div.sub-title #{gameInfo.release_year}
 
-  div.summary-container #{gameInfo.summary}
+  div.summary-container 
+    img(class="cover-art" alt="Cover art for #{gameInfo.name}")
+    div.summary 
+      p(id="summary-text") #{gameInfo.summary}
+
+    // <p>Read more at <a class="link-to-igdb" href="">The Internet Game Database</a></p>
 
   script(type='text/javascript').
     var gameInfo =!{JSON.stringify(gameInfo)}
