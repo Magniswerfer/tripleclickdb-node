@@ -7,7 +7,6 @@ axios.get('/getMostRecentGames').then(resp =>{
     recentGames.forEach(mention =>{
         let recentGame = document.createElement('a');
         axios.get('/getGameById/'+ mention.game).then(game =>{
-            console.log(game);
             recentGame.title = game.data.name
             recentGame.href = "/games/"+game.data.id;
             recentGame.classList.add("recent-game-mention-link");
@@ -42,13 +41,19 @@ axios.get('/getAllGames').then(resp => {
         let col2 = document.createElement('td');
         let col3 = document.createElement('td');
 
-        let epName;
+        
         let epDate;
         //Most recent mentions
         axios.get('/getMostRecentMentionsOf/'+game.id).then(resp =>{ // get the most recent mention of the game
-            epName = resp.data.name;
-            epDate = resp.data.date;
+            
+            let epLinkElement = document.createElement('a');
+            let epName = document.createTextNode(resp.data.name); // put the name of  the game as link
+            epLinkElement.appendChild(epName); 
+            epLinkElement.title = resp.data.name;
+            epLinkElement.href = "/episodes/"+resp.data.id; // make it reference our API
+            col2.appendChild(epLinkElement);
 
+            epDate = resp.data.date;
 
             let epYear = epDate.toString().slice(0, 4);
             let epMonth = epDate.toString().slice(4, 6);
@@ -56,7 +61,6 @@ axios.get('/getAllGames').then(resp => {
 
             epDate = epYear + "-" + epMonth + "-" + epDay; // format the date (this is ugly, but works lols)
             
-            col2.innerHTML = epName;
             col3.innerHTML = epDate ;
         
         });

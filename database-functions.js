@@ -40,7 +40,11 @@ const Episode = sequelize.define('Episode', {
   date: {
   type: DataTypes.DATE,
   allowNull: false
-  }
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+    }
 },{
   timestamps: false
 });
@@ -78,6 +82,23 @@ async function findAllItems(Model){
   return JSON.stringify(items,null,2);
 }
 
+async function findAllItemsSort1(Model, sort1, ORDER1){
+  const items = await Model.findAll({order: [
+    [sort1, ORDER1]
+  ]});
+  //console.log(items.every(item => item instanceof Model)); // true
+  return JSON.stringify(items,null,2);
+}
+
+async function findAllItemsSort2(Model, sort1, ORDER1, sort2, ORDER2){
+  const items = await Model.findAll({order: [
+    [sort1, ORDER1],
+    [sort2, ORDER2],
+  ]});
+  //console.log(items.every(item => item instanceof Model)); // true
+  return JSON.stringify(items,null,2);
+}
+
 async function findItemByPrimaryKey(Model, key){
   const item = await Model.findByPk(key);
   if (item === null) {
@@ -92,7 +113,7 @@ async function findItemByPrimaryKey(Model, key){
 ************************************/
 
 async function findAllGames(){
-  return findAllItems(Game);
+  return findAllItemsSort1(Game, "name", "ASC");
 }
 
 async function findGameByPrimaryKey(key){

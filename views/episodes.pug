@@ -1,0 +1,9 @@
+extends layout
+
+block content
+
+    h1 Episode #{episodeInfo.id}: #{episodeInfo.name}
+
+    div.episode-description #{episodeInfo.description}
+
+    script(src='/javascripts/episodes_script.js')
