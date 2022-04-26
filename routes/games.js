@@ -18,8 +18,6 @@ function getGameInfo(req, res, next){
     igdb.getGameInfo(req.igdbID).then(gameInfo => {
         res.data = gameInfo.body;
         res.data.release_year = new Date(parseInt(gameInfo.body.first_release_date)*1000).getFullYear();
-        console.log("PLEASE LOG ME!!!!!!!!")
-        console.log("PLEASE LOG ME!!!!!!!!")
         next();
     }).catch(err => {
         next(err);
