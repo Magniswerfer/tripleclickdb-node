@@ -1,9 +1,34 @@
 const gamesTableBody = document.querySelector(".gamesTableBody");
+const recentGamesWrapperInner = document.querySelector(".recentGamesWrapperInner");
 
-let games;
+// Get most recently discussed games and display their cover art
+axios.get('/getMostRecentGames').then(resp =>{
+    recentGames = resp.data;
+    recentGames.forEach(mention =>{
+        let recentGame = document.createElement('a');
+        axios.get('/getGameById/'+ mention.game).then(game =>{
+            console.log(game);
+            recentGame.title = game.data.name
+            recentGame.href = "/games/"+game.data.id;
+            recentGame.classList.add("recent-game-mention-link");
+            axios.get('/getGameCoverByIgdbId/'+game.data.igdbID).then(cover =>{
+              let imageID = cover.data.body[0].image_id;
+              let gameCover = document.createElement('img');
+              gameCover.src = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + imageID + ".png";
+              gameCover.alt = "Cover art for" + game.data.name;
+              gameCover.classList.add("recent-game-mention");
+              recentGame.appendChild(gameCover);
+              recentGamesWrapperInner.appendChild(recentGame);
+            });
+        }); 
+    });
+});
+//  <img class="recent-game-mention" data-recent-mention-gameID="{{newestGamesIGDB[i]}}" src="/assets/img/loading-gif.gif" alt="Cover art for {{newestGamesTitle[i]}}">
+//<a class="recent-game-mention-link" title="{{newestGamesTitle[i]}}" href="{{newestGamesURL[i]}}"></a>
 
+// Get all games, and put them in a big table
 axios.get('/getAllGames').then(resp => {
-    games = resp.data;
+    let games = resp.data;
     games.forEach(game => { // run through all games
         let newRow = document.createElement("tr") // create element for all games
 
@@ -58,3 +83,23 @@ axios.get('/getAllGames').then(resp => {
         gamesTableBody.appendChild(newRow);
     });
 });
+
+function searchGames() {
+    
+    let input = document.getElementById("myInput");
+    let filter = input.value.toUpperCase();
+    let table = document.getElementById("frontPageGamesTable");
+    let tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      let td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        let txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }

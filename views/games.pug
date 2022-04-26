@@ -1,5 +1,12 @@
 extends index
 
 block content
-  h1= title
-  p This is #{title}
+  h1.game-title #{gameInfo.name}
+  div.sub-title #{gameInfo.release_year}
+
+  div.summary-container #{gameInfo.summary}
+
+  script(type='text/javascript').
+    var gameInfo =!{JSON.stringify(gameInfo)}
+
+  script(src='/javascripts/games_script.js')

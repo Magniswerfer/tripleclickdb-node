@@ -4,6 +4,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/javascripts/sorttable.js"></script>
   body
-    block content
+    div.content-wrapper
+      div.logo-container 
+        a(href='/')
+          img(class="hero-logo" src='/images/logo.png')
+
+      block content
     

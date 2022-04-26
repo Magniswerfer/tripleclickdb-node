@@ -1,15 +1,23 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  
+  h1 Recently Mentioned
+  div(class="recentGamesWrapper")
+    div(class="recentGamesWrapperInner")
 
-  table.gamesTable
+
+  div(class = "gameTableWrapper")
+    h1 Games List
+    div(class="gameSearchBar")
+        input(type="text" id="myInput" onkeyup="searchGames()" placeholder="Search for games..")
+
+  table(class="sortable gamesTable", id="frontPageGamesTable")
     thead 
-      tr
+      tr(class="header")
         th Game
         th Most Recent Mention 
-        th Mentioned On 
+        th(id="gameTableDate") Date Mentioned 
         th Total Mentions
     tbody.gamesTableBody
   
