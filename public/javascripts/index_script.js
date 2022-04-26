@@ -23,8 +23,6 @@ axios.get('/getMostRecentGames').then(resp =>{
         }); 
     });
 });
-//  <img class="recent-game-mention" data-recent-mention-gameID="{{newestGamesIGDB[i]}}" src="/assets/img/loading-gif.gif" alt="Cover art for {{newestGamesTitle[i]}}">
-//<a class="recent-game-mention-link" title="{{newestGamesTitle[i]}}" href="{{newestGamesURL[i]}}"></a>
 
 // Get all games, and put them in a big table
 axios.get('/getAllGames').then(resp => {
@@ -51,16 +49,15 @@ axios.get('/getAllGames').then(resp => {
             epName = resp.data.name;
             epDate = resp.data.date;
 
+
             let epYear = epDate.toString().slice(0, 4);
-            let epMonth = epDate.toString().slice(5, 6);
-            let epDay = epDate.toString().slice(7, 8);
+            let epMonth = epDate.toString().slice(4, 6);
+            let epDay = epDate.toString().slice(6, 8);
 
             epDate = epYear + "-" + epMonth + "-" + epDay; // format the date (this is ugly, but works lols)
-
-            let date = new Date (epDate)
             
             col2.innerHTML = epName;
-            col3.innerHTML = date.toLocaleDateString('en', { year:"numeric", month:"short", day:"numeric"}) ;
+            col3.innerHTML = epDate ;
         
         });
         

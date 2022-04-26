@@ -56,8 +56,6 @@ function getGameById(req, res, next){
 
 function getGameCoverByIgdbId(req, res, next){
   idgb.getGameCover(req.params.igdbID).then(cover =>{
-    console.log("HRELLO HELLO HELLRO");
-    console.log(cover);
     res.cover = cover;
     next();
   })
