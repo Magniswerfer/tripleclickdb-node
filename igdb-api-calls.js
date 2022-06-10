@@ -2,7 +2,7 @@ const axios = require('axios');
 const sprintf = require('sprintf-js').sprintf;
 
 const headers = {"Client-ID": "r3d8id87llzz9sxqqgi0385jaet59e",        // DO SOMETHING ABOUT HAVING THESE EXPOSED!
-"Authorization" : "Bearer 0zhmh87qo9rpkhy6auz6eq6jb9qmmt"};
+"Authorization" : "Bearer dciwtn0lkigy78b0b6xsg47dfr2gkr"};
 
 async function getGameInfo (igdbID){
     let igdbid = igdbID;
